@@ -52,7 +52,8 @@ ul.rating {
 
 body {
     padding-top: 55px;
-    background-color: #f1f5fa; /* BLUE GREY - 50 */
+    /*background-color: #f1f5fa; /* BLUE GREY - 50 */
+    background-color: #dde6f6;
     font-family: 'blinker';
 }
 
@@ -529,6 +530,7 @@ select.form-control {
 .btn-warning {
     color: #FFF;
     background-color: #00add3;
+    border-color: #00add3;
 }
 
 .btn-warning:hover,
@@ -1173,15 +1175,16 @@ a.dropdown-menu-item:hover {
  * =================================================================================== */
 
 .navbar-default {
-    background-color: #dde6f6; /* GREY - 200 */
+    /*background-color: #dde6f6; /* GREY - 200 */
+    background-color: #2d58a7;
 }
 
 .navbar-default .navbar-text {
-    color: rgba(0,0,0,0.54);
+    color: white;
 }
 
 .navbar-default .navbar-nav > li > a {
-    color: rgba(0,0,0,0.87);
+    color: white;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
