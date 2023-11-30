@@ -2295,3 +2295,8 @@ img.contrib-img {
 .main-container {
     padding-bottom: 50px;
 }
+
+.cert-span {
+    margin-left: 10px;
+    font-weight: normal;
+}
