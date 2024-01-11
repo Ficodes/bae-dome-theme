@@ -59,6 +59,8 @@ html
 
         let thePopup = openWindow();
         setInterval(pollServer, 1000, 'nonce');
+        let cbTimeout = setTimeout(triggerCallback, 15000)
+
         async function pollServer() {
             try {
                 const response = await fetch('#{pollURL}')
@@ -68,9 +70,19 @@ html
                 } else if (response.status === 401) {
                     return
                 }
+                clearTimeout(cbTimeout)
                 thePopup.close()
             } catch (error) {
                 console.log(error)
             }
             location.replace('/')
+        }
+
+        async function triggerCallback() {
+            console.log('Trigger default callback')
+            try {
+                await fetch('/auth/vc/callback?#{statePair}&code=test')
+            } catch (error) {
+                console.log(error)
+            }
         }
