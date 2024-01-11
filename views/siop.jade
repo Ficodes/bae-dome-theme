@@ -52,8 +52,11 @@ html
         }
 
         function openWindow() {
-            return popupCenter({url: '#{verifierQRCodeURL}?#{statePair}&#{callbackURLPair}&#{clientIDPair}', title: 'Scan QR code', w: 500, h: 500});
+            const url = '#{verifierQRCodeURL}?#{statePair}&#{callbackURLPair}&#{clientIDPair}'
+            console.log(url)
+            return popupCenter({url: url, title: 'Scan QR code', w: 500, h: 500});
         }
+
         let thePopup = openWindow();
         setInterval(pollServer, 1000, 'nonce');
         async function pollServer() {
