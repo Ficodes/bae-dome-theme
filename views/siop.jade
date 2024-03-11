@@ -62,8 +62,25 @@ html
         let cbTimeout = setTimeout(triggerCallback, 15000)
 
         async function pollServer() {
+            const referrer = document.referrer;
+            let referrerDomain = null
+            let path = null
+
+            // Check if the referrer is not empty
+            if (referrer) {
+                // Create a new URL object based on the referrer
+                const referrerUrl = new URL(referrer);
+
+                // Get the domain of the referrer
+                referrerDomain = referrerUrl.protocol + '//' + referrerUrl.hostname + (referrerUrl.port ? ':' + referrerUrl.port : '');
+                path = referrerUrl.pathname
+                console.log("Referrer Domain: ", referrerDomain);
+            } else {
+                console.log("No referrer data available");
+            }
+
             try {
-                const response = await fetch('#{pollURL}')
+                const response = await fetch('#{pollURL}?#{statePair}')
                 if (response.status === 400 || response.status === 500) {
                     location.replace('/')
                     return
@@ -75,7 +92,22 @@ html
             } catch (error) {
                 console.log(error)
             }
-            location.replace('/')
+
+            // Login correct, redirect to the referrer
+            const hostname = window.location.hostname;
+            // Get the port of the current page
+            const port = window.location.port;
+            const proto = window.location.protocol
+            const hostnameWithPort = proto + '//' + hostname + (port ? ':' + port : '');
+            if (referrerDomain != null && referrerDomain != hostnameWithPort) {
+                location.replace(referrerDomain)
+            } else if (path != null){
+                //location.replace(path)
+                const accessToken = 'eyJhbGciOiJFUzI1NiIsImtpZCI6ImU4bmRaY01hcUt1Z0kwRkxUUmZUX0xNTWM4WUI1cEt5RXZGZkVMc0VyTjgiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiZG9tZS1tYXJrZXRwbGFjZS5vcmciXSwiY2xpZW50X2lkIjoiZGlkOndlYjpkb21lLW1hcmtldHBsYWNlLm9yZyIsImV4cCI6MTcwNDk3NTk5OSwiaXNzIjoiZGlkOndlYjpkb21lLW1hcmtldHBsYWNlLm9yZyIsImtpZCI6ImU4bmRaY01hcUt1Z0kwRkxUUmZUX0xNTWM4WUI1cEt5RXZGZkVMc0VyTjgiLCJzdWIiOiJkaWQ6bXk6d2FsbGV0IiwidmVyaWZpYWJsZUNyZWRlbnRpYWwiOnsiQGNvbnRleHQiOlsiaHR0cHM6Ly93d3cudzMub3JnLzIwMTgvY3JlZGVudGlhbHMvdjEiLCJodHRwczovL3czaWQub3JnL3NlY3VyaXR5L3N1aXRlcy9qd3MtMjAyMC92MSJdLCJjcmVkZW50aWFsU2NoZW1hIjp7ImlkIjoiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0ZJV0FSRS1PcHMvdGVjaC14LWNoYWxsZW5nZS9tYWluL3NjaGVtYS5qc29uIiwidHlwZSI6IkZ1bGxKc29uU2NoZW1hVmFsaWRhdG9yMjAyMSJ9LCJjcmVkZW50aWFsU3ViamVjdCI6eyJmYW1pbHlOYW1lIjoiVXNlciIsImZpcnN0TmFtZSI6IkFkbWluIiwiaWQiOiI2NGU5ZmJjNy00NGQ3LTQxMGQtYTllNS1hNDQ3MjFjNGQwYmUiLCJyb2xlcyI6W3sibmFtZXMiOlsiYWRtaW4iXSwidGFyZ2V0IjoiZGlkOndlYjpkb21lLW1hcmtldHBsYWNlLm9yZyJ9XSwidHlwZSI6Imd4Ok5hdHVyYWxQYXJ0aWNpcGFudCJ9LCJpZCI6InVybjp1dWlkOmI2MWVmNzUxLTVkZmUtNDVjOC04Y2YzLTNlMDQ1ZmY4MzMzYyIsImlzc3VhbmNlRGF0ZSI6IjIwMjQtMDEtMDlUMTA6MTI6NTRaIiwiaXNzdWVkIjoiMjAyNC0wMS0wOVQxMDoxMjo1NFoiLCJpc3N1ZXIiOiJkaWQ6d2ViOmRvbWUtbWFya2V0cGxhY2Uub3JnIiwicHJvb2YiOnsiY3JlYXRlZCI6IjIwMjQtMDEtMDlUMTA6MTI6NTRaIiwiY3JlYXRvciI6ImRpZDp3ZWI6ZG9tZS1tYXJrZXRwbGFjZS5vcmciLCJqd3MiOiJleUppTmpRaU9tWmhiSE5sTENKamNtbDBJanBiSW1JMk5DSmRMQ0poYkdjaU9pSkZaRVJUUVNKOS4udDYyU1M4Zm1jZlpKMXo2dGc1Y283Wkd3UXZSUEFjOXhkam0zVElEem40Wlp3Tk1DeG1ZSTRnWkpUeGtmdFV0cWlnTklFNHpLaVZEcDlOeEFyS2lKQ2ciLCJ0eXBlIjoiSnNvbldlYlNpZ25hdHVyZTIwMjAiLCJ2ZXJpZmljYXRpb25NZXRob2QiOiJkaWQ6d2ViOmRvbWUtbWFya2V0cGxhY2Uub3JnI2Q2NjUzY2I1Nzk0MjRjMzg5YjU2ZTFhZjYxMTEwZTAzIn0sInR5cGUiOlsiVmVyaWZpYWJsZUNyZWRlbnRpYWwiLCJMZWdhbFBlcnNvbkNyZWRlbnRpYWwiXSwidmFsaWRGcm9tIjoiMjAyNC0wMS0wOVQxMDoxMjo1NFoifX0.CdxXp4TMH4C6Ki--jgpn-SCH0XFnX4R8vxuYos9ZaljxmlLMUjXFRVhGJfJOnGrn9UF0s1O_Xjoc4gmcpO8RHA'
+                location.replace(`/gui/dashboard?token=${accessToken}`)
+            } else {
+                location.replace('/')
+            }
         }
 
         async function triggerCallback() {
