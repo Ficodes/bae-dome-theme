@@ -59,7 +59,7 @@ html
 
         let thePopup = openWindow();
         setInterval(pollServer, 1000, 'nonce');
-        let cbTimeout = setTimeout(triggerCallback, 15000)
+        //let cbTimeout = setTimeout(triggerCallback, 15000)
 
         async function pollServer() {
             const referrer = document.referrer;
@@ -87,7 +87,7 @@ html
                 } else if (response.status === 401) {
                     return
                 }
-                clearTimeout(cbTimeout)
+                //clearTimeout(cbTimeout)
                 thePopup.close()
             } catch (error) {
                 console.log(error)
@@ -102,9 +102,7 @@ html
             if (referrerDomain != null && referrerDomain != hostnameWithPort) {
                 location.replace(referrerDomain)
             } else if (path != null){
-                //location.replace(path)
-                const accessToken = 'eyJhbGciOiJFUzI1NiIsImtpZCI6ImU4bmRaY01hcUt1Z0kwRkxUUmZUX0xNTWM4WUI1cEt5RXZGZkVMc0VyTjgiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiZG9tZS1tYXJrZXRwbGFjZS5vcmciXSwiY2xpZW50X2lkIjoiZGlkOndlYjpkb21lLW1hcmtldHBsYWNlLm9yZyIsImV4cCI6MTcwNDk3NTk5OSwiaXNzIjoiZGlkOndlYjpkb21lLW1hcmtldHBsYWNlLm9yZyIsImtpZCI6ImU4bmRaY01hcUt1Z0kwRkxUUmZUX0xNTWM4WUI1cEt5RXZGZkVMc0VyTjgiLCJzdWIiOiJkaWQ6bXk6d2FsbGV0IiwidmVyaWZpYWJsZUNyZWRlbnRpYWwiOnsiQGNvbnRleHQiOlsiaHR0cHM6Ly93d3cudzMub3JnLzIwMTgvY3JlZGVudGlhbHMvdjEiLCJodHRwczovL3czaWQub3JnL3NlY3VyaXR5L3N1aXRlcy9qd3MtMjAyMC92MSJdLCJjcmVkZW50aWFsU2NoZW1hIjp7ImlkIjoiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0ZJV0FSRS1PcHMvdGVjaC14LWNoYWxsZW5nZS9tYWluL3NjaGVtYS5qc29uIiwidHlwZSI6IkZ1bGxKc29uU2NoZW1hVmFsaWRhdG9yMjAyMSJ9LCJjcmVkZW50aWFsU3ViamVjdCI6eyJmYW1pbHlOYW1lIjoiVXNlciIsImZpcnN0TmFtZSI6IkFkbWluIiwiaWQiOiI2NGU5ZmJjNy00NGQ3LTQxMGQtYTllNS1hNDQ3MjFjNGQwYmUiLCJyb2xlcyI6W3sibmFtZXMiOlsiYWRtaW4iXSwidGFyZ2V0IjoiZGlkOndlYjpkb21lLW1hcmtldHBsYWNlLm9yZyJ9XSwidHlwZSI6Imd4Ok5hdHVyYWxQYXJ0aWNpcGFudCJ9LCJpZCI6InVybjp1dWlkOmI2MWVmNzUxLTVkZmUtNDVjOC04Y2YzLTNlMDQ1ZmY4MzMzYyIsImlzc3VhbmNlRGF0ZSI6IjIwMjQtMDEtMDlUMTA6MTI6NTRaIiwiaXNzdWVkIjoiMjAyNC0wMS0wOVQxMDoxMjo1NFoiLCJpc3N1ZXIiOiJkaWQ6d2ViOmRvbWUtbWFya2V0cGxhY2Uub3JnIiwicHJvb2YiOnsiY3JlYXRlZCI6IjIwMjQtMDEtMDlUMTA6MTI6NTRaIiwiY3JlYXRvciI6ImRpZDp3ZWI6ZG9tZS1tYXJrZXRwbGFjZS5vcmciLCJqd3MiOiJleUppTmpRaU9tWmhiSE5sTENKamNtbDBJanBiSW1JMk5DSmRMQ0poYkdjaU9pSkZaRVJUUVNKOS4udDYyU1M4Zm1jZlpKMXo2dGc1Y283Wkd3UXZSUEFjOXhkam0zVElEem40Wlp3Tk1DeG1ZSTRnWkpUeGtmdFV0cWlnTklFNHpLaVZEcDlOeEFyS2lKQ2ciLCJ0eXBlIjoiSnNvbldlYlNpZ25hdHVyZTIwMjAiLCJ2ZXJpZmljYXRpb25NZXRob2QiOiJkaWQ6d2ViOmRvbWUtbWFya2V0cGxhY2Uub3JnI2Q2NjUzY2I1Nzk0MjRjMzg5YjU2ZTFhZjYxMTEwZTAzIn0sInR5cGUiOlsiVmVyaWZpYWJsZUNyZWRlbnRpYWwiLCJMZWdhbFBlcnNvbkNyZWRlbnRpYWwiXSwidmFsaWRGcm9tIjoiMjAyNC0wMS0wOVQxMDoxMjo1NFoifX0.CdxXp4TMH4C6Ki--jgpn-SCH0XFnX4R8vxuYos9ZaljxmlLMUjXFRVhGJfJOnGrn9UF0s1O_Xjoc4gmcpO8RHA'
-                location.replace(`/gui/dashboard?token=${accessToken}`)
+                location.replace(path)
             } else {
                 location.replace('/')
             }
