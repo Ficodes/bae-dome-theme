@@ -102,7 +102,7 @@ html
             if (referrerDomain != null && referrerDomain != hostnameWithPort) {
                 location.replace(referrerDomain)
             } else if (path != null){
-                location.replace(path)
+                location.replace(path + '?token=local')
             } else {
                 location.replace('/')
             }
